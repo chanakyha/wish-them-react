@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import MainScreen from "./components/MainScreen";
 
 function App() {
+  document.title = "Wish Them | WebApp";
   return (
     <BrowserRouter>
       <div className="app">

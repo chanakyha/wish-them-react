@@ -6,8 +6,6 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import GoogleSVG from "../svg/GoogleLogo.svg";
 
 function Login(props) {
-  document.querySelector("body").style.backgroundColor = props.bgColor;
-
   const navigate = useNavigate();
 
   const googleLogin = () => {
