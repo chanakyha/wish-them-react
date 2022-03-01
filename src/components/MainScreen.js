@@ -5,6 +5,9 @@ import "./MainScreen.css";
 import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import FolderPlusSVG from "bootstrap-icons/icons/folder-plus.svg";
 import PlusCircleSVG from "bootstrap-icons/icons/plus-circle.svg";
 import XCircleSVG from "bootstrap-icons/icons/x-circle.svg";
@@ -34,6 +37,18 @@ function MainScreen(props) {
     }
   });
 
+  const showToast = (message) => {
+    toast(message, {
+      position: "bottom-right",
+      autoClose: 4000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   const displayAddRec = () => {
     setDisplayAddRecState(1);
   };
@@ -53,12 +68,14 @@ function MainScreen(props) {
         birthday: newBirthdate,
       },
       { merge: true }
-    );
+    ).then((status) => {
+      setNewName("");
+      setNewCategory("");
+      setNewBirthdate("");
+      setDisplayAddRecState(0);
 
-    setNewName("");
-    setNewCategory("");
-    setNewBirthdate("");
-    setDisplayAddRecState(0);
+      showToast("👌 Successfully added the Record to the Database");
+    });
   };
 
   return (
@@ -147,6 +164,17 @@ function MainScreen(props) {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }
