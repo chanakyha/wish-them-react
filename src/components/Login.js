@@ -2,11 +2,22 @@ import React from "react";
 import "./Login.css";
 import "../firebase";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+} from "firebase/auth";
 import GoogleSVG from "../svg/GoogleLogo.svg";
 
 function Login(props) {
   const navigate = useNavigate();
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      navigate("/");
+    }
+  });
 
   const googleLogin = () => {
     const provider = new GoogleAuthProvider();
@@ -16,13 +27,7 @@ function Login(props) {
         navigate("/");
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(error.message);
         // ...
       });
   };
