@@ -1,0 +1,30 @@
+.eachrec {
+  margin: 2em 0 2em 0;
+}
+.element-container {
+  padding: 2em;
+  display: flex;
+}
+
+.info {
+  width: 80%;
+}
+
+.date-container > h4 {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.main-container {
+  background-color: var(--bs-success);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.date-container,
+.info {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}

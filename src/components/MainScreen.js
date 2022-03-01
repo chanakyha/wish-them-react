@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
+import EachRec from "./EachRec";
 import "./MainScreen.css";
 
 import { db } from "../firebase";
@@ -161,6 +162,10 @@ function MainScreen(props) {
                 </div>
               </div>
             )}
+          </div>
+          <div className="card-body ">
+            <EachRec name="Chanakyha" date="21-09-2003" category="Family" />
+            <EachRec name="Chanakyha" date="21-09-2003" category="Family" />
           </div>
         </div>
       </div>
