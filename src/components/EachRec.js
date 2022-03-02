@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import "./EachRec.css";
 
 import PenSVG from "bootstrap-icons/icons/pencil-square.svg";
 import XCircleSVG from "bootstrap-icons/icons/x-circle.svg";
 
 function EachRec(props) {
+  var daysMain = "";
+
+  const subtractDates = () => {
+    let givenDate = props.date.split("-");
+    let dateFormat = `${givenDate[1]}/${givenDate[2]}/${givenDate[0]}`;
+
+    console.log(dateFormat);
+
+    let day1 = new Date(dateFormat);
+    let day2 = new Date();
+
+    day2 = new Date(
+      day2.getMonth() + 1 + "/" + day2.getDate() + "/" + day2.getFullYear()
+    );
+
+    let difference = Math.abs(day2 - day1);
+    let days = difference / (1000 * 3600 * 24);
+    daysMain = days;
+  };
+
+  subtractDates();
+
   return (
     <div className="eachrec col-sm-3 col-md-6 col-lg-3">
       <div className="card">
@@ -44,7 +66,9 @@ function EachRec(props) {
             </a>
           </div>
         </div>
-        <div className="card-footer text-center text-muted">2 days left</div>
+        <div className="card-footer text-center text-muted">
+          {daysMain} days left
+        </div>
       </div>
     </div>
   );
