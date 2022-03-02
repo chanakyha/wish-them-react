@@ -11,6 +11,9 @@ import {
   collection,
   query,
   orderBy,
+  addDoc,
+  deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -27,6 +30,9 @@ function MainScreen(props) {
   const [displayName, setDisplayName] = useState("");
   const [photoURL, setphotoURL] = useState("");
   const [userEmail, setuserEmail] = useState("");
+
+  const [editAdd, setEditAdd] = useState("Add Birthday");
+  const [docid, setDocid] = useState("");
 
   const [displayAddRecState, setDisplayAddRecState] = useState(0);
   const [newName, setNewName] = useState("");
@@ -48,33 +54,59 @@ function MainScreen(props) {
     });
   };
 
+  const deleteRec = (id) => {
+    deleteDoc(doc(db, userEmail, id));
+    showToast("❌ Deteted the Record Successfully");
+  };
+
+  const editRec = (id, oldData) => {
+    // updateDoc(doc(db, userEmail, id));
+    setDisplayAddRecState(1);
+    setDocid(id);
+
+    setEditAdd("Edit Birthday");
+    setNewName(oldData.name);
+    setNewCategory(oldData.category);
+    setNewBirthdate(oldData.birthday);
+  };
+
   const displayAddRec = () => {
+    setEditAdd("Add Birthday");
     setDisplayAddRecState(1);
   };
 
   const removeAddRec = () => {
+    setNewName("");
+    setNewCategory("");
+    setNewBirthdate("");
     setDisplayAddRecState(0);
-    console.log(newBirthdate, newCategory);
   };
 
   const addFireRec = (e) => {
     e.preventDefault();
-    setDoc(
-      doc(db, userEmail, newName),
-      {
+    if (editAdd == "Add Birthday") {
+      addDoc(
+        collection(db, userEmail),
+        {
+          name: newName,
+          category: newCategory,
+          birthday: newBirthdate,
+        },
+        { merge: true }
+      );
+      showToast("👌 Successfully added the Record to the Database");
+    } else {
+      updateDoc(doc(db, userEmail, docid), {
         name: newName,
         category: newCategory,
         birthday: newBirthdate,
-      },
-      { merge: true }
-    ).then((status) => {
-      setNewName("");
-      setNewCategory("");
-      setNewBirthdate("");
-      setDisplayAddRecState(0);
-
-      showToast("👌 Successfully added the Record to the Database");
-    });
+      });
+      showToast("👍 Updated The Record Successfully");
+    }
+    setNewName("");
+    setNewCategory("");
+    setNewBirthdate("");
+    setDisplayAddRecState(0);
   };
 
   const [fireData, setFireData] = useState([
@@ -170,7 +202,7 @@ function MainScreen(props) {
                     className="btn btn-outline-primary"
                     disabled={!newName || !newBirthdate || !newCategory}
                   >
-                    Add Birthday <img src={PlusCircleSVG} alt="" />
+                    {editAdd} <img src={PlusCircleSVG} alt="" />
                   </button>
                   &nbsp;
                   <button
@@ -200,10 +232,12 @@ function MainScreen(props) {
               ) : (
                 fireData.map((data) => (
                   <EachRec
-                    key={data.key}
+                    id={data.key}
                     name={data.name}
                     date={data.birthday}
                     category={data.category}
+                    onDelete={deleteRec}
+                    onEdit={editRec}
                   />
                 ))
               )}

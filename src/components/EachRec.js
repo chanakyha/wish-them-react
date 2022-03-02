@@ -17,10 +17,26 @@ function EachRec(props) {
             <b>Birthday:</b> {props.date}
           </p>
           <div className="btn-group">
-            <a href="#" className="btn btn-outline-danger">
+            <a
+              onClick={() => {
+                props.onDelete(props.id);
+              }}
+              href="#"
+              className="btn btn-outline-danger"
+            >
               Delete
             </a>
-            <a href="#" className="btn btn-outline-primary">
+            <a
+              onClick={() => {
+                props.onEdit(props.id, {
+                  name: props.name,
+                  birthday: props.date,
+                  category: props.category,
+                });
+              }}
+              href="#"
+              className="btn btn-outline-primary"
+            >
               Edit
             </a>
             <a href="#" className="btn btn-outline-success">
