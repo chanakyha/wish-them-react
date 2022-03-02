@@ -33,7 +33,7 @@ function Navbar(props) {
           </button>
           <div
             className="offcanvas offcanvas-end  bg-dark text-light"
-            tabindex="-1"
+            tabIndex="-1"
             id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel"
           >

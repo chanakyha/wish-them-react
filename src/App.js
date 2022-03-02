@@ -1,5 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -12,10 +13,7 @@ function App() {
     <BrowserRouter>
       <div className="app">
         <Routes>
-          <Route
-            path="/login"
-            element={<Login bgColor="var(--bs-success)" />}
-          />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<MainScreen bgColor="#fff" />} />
         </Routes>
       </div>

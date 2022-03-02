@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import EachRec from "./EachRec";
 import "./MainScreen.css";
 
 import { db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  onSnapshot,
+  collection,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,15 +35,6 @@ function MainScreen(props) {
 
   const navigate = useNavigate();
   const auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setDisplayName(user.displayName);
-      setphotoURL(user.photoURL);
-      setuserEmail(user.email);
-    } else {
-      navigate("/login");
-    }
-  });
 
   const showToast = (message) => {
     toast(message, {
@@ -78,6 +76,38 @@ function MainScreen(props) {
       showToast("👌 Successfully added the Record to the Database");
     });
   };
+
+  const [fireData, setFireData] = useState([
+    { name: "Loading..", category: "Loading", birthday: "Loading" },
+  ]);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setDisplayName(user.displayName);
+        setphotoURL(user.photoURL);
+        setuserEmail(user.email);
+      } else {
+        navigate("/login");
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(userEmail);
+    if (userEmail) {
+      onSnapshot(
+        query(collection(db, userEmail), orderBy("birthday")),
+        (snapshot) => {
+          setFireData(
+            snapshot.docs.map((doc) => ({ ...doc.data(), key: doc.id }))
+          );
+        }
+      );
+    }
+  }, [userEmail]);
+
+  console.log(fireData);
 
   return (
     <div className="mainscreen">
@@ -164,8 +194,20 @@ function MainScreen(props) {
             )}
           </div>
           <div className="card-body ">
-            <EachRec name="Chanakyha" date="21-09-2003" category="Family" />
-            <EachRec name="Chanakyha" date="21-09-2003" category="Family" />
+            <div className="row">
+              {fireData.length == 0 ? (
+                <h1 className="text-center">The is no Data Please Add some</h1>
+              ) : (
+                fireData.map((data) => (
+                  <EachRec
+                    key={data.key}
+                    name={data.name}
+                    date={data.birthday}
+                    category={data.category}
+                  />
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
