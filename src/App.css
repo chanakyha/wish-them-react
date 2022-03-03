@@ -1,3 +1,15 @@
 body {
   background-color: var(--bs-success) !important;
 }
+
+.app__footer {
+  position: fixed;
+  bottom: 0;
+  left: 0.5em;
+}
+.app__footer > p > a {
+  color: black;
+}
+.app__footer > p > a:hover {
+  color: blue;
+}

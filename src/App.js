@@ -17,6 +17,14 @@ function App() {
           <Route path="/" element={<MainScreen bgColor="#fff" />} />
         </Routes>
       </div>
+      <footer className="app__footer">
+        <p>
+          &copy;
+          <a target="_blank" href="https://chanakyha-coder.xyz">
+            Chanakyha.V
+          </a>
+        </p>
+      </footer>
     </BrowserRouter>
   );
 }

@@ -6,6 +6,7 @@ import PencilSquareSVG from "bootstrap-icons/icons/pencil-square.svg";
 
 function EachRec(props) {
   var daysMain = "";
+  var ageMain = "";
 
   const subtractDates = () => {
     var myBirthday, today, bday, diff, days;
@@ -23,7 +24,26 @@ function EachRec(props) {
     daysMain = days;
   };
 
+  const ageCalc = () => {
+    let dob = new Date(
+      `${props.date.split("-")[1]}/${props.date.split("-")[2]}/${
+        props.date.split("-")[0]
+      }`
+    );
+
+    let month_diff = Date.now() - dob.getTime();
+
+    let age_dt = new Date(month_diff);
+
+    let year = age_dt.getUTCFullYear();
+
+    let age = Math.abs(year - 1970);
+
+    ageMain = age + 1;
+  };
+
   subtractDates();
+  ageCalc();
 
   return (
     <div className="eachrec col-sm-3 col-md-6 col-lg-3">
@@ -62,7 +82,7 @@ function EachRec(props) {
           </div>
         </div>
         <div className="card-footer text-center text-muted">
-          {daysMain} days left
+          {daysMain} days left for {ageMain}
         </div>
       </div>
     </div>

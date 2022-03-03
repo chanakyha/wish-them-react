@@ -64,6 +64,15 @@ function Navbar(props) {
                     />
                   </a>
                 </li>
+                <div className="nav-item">
+                  <a
+                    target="_blank"
+                    href="https://chanakyha-coder.xyz"
+                    className="nav-link"
+                  >
+                    About
+                  </a>
+                </div>
                 <li className="nav-item">
                   <a
                     onClick={signOutFunc}

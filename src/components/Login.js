@@ -43,6 +43,11 @@ function Login(props) {
           &nbsp; Login with Google
         </div>
       </div>
+      <div className="card-footer">
+        <a target="_blank" href="https://chanakyha-coder.xyz">
+          About Me
+        </a>
+      </div>
     </div>
   );
 }
