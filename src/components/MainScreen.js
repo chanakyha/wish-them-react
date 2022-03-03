@@ -225,8 +225,8 @@ function MainScreen(props) {
               </div>
             )}
           </div>
-          <div className="card-body ">
-            <div className="row">
+          <div className="card-body">
+            <div className="row justify-content-center">
               {fireData.length == 0 ? (
                 <h1 className="text-center">The is no Data Please Add some</h1>
               ) : (

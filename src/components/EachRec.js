@@ -1,27 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import "./EachRec.css";
 
-import PenSVG from "bootstrap-icons/icons/pencil-square.svg";
 import XCircleSVG from "bootstrap-icons/icons/x-circle.svg";
+import PencilSquareSVG from "bootstrap-icons/icons/pencil-square.svg";
 
 function EachRec(props) {
   var daysMain = "";
 
   const subtractDates = () => {
-    let givenDate = props.date.split("-");
-    let dateFormat = `${givenDate[1]}/${givenDate[2]}/${givenDate[0]}`;
-
-    console.log(dateFormat);
-
-    let day1 = new Date(dateFormat);
-    let day2 = new Date();
-
-    day2 = new Date(
-      day2.getMonth() + 1 + "/" + day2.getDate() + "/" + day2.getFullYear()
-    );
-
-    let difference = Math.abs(day2 - day1);
-    let days = difference / (1000 * 3600 * 24);
+    var myBirthday, today, bday, diff, days;
+    myBirthday = [
+      parseInt(props.date.split("-")[2]),
+      parseInt(props.date.split("-")[1]),
+    ]; // 6th of February
+    today = new Date();
+    bday = new Date(today.getFullYear(), myBirthday[1] - 1, myBirthday[0]);
+    if (today.getTime() > bday.getTime()) {
+      bday.setFullYear(bday.getFullYear() + 1);
+    }
+    diff = bday.getTime() - today.getTime();
+    days = Math.floor(diff / (1000 * 60 * 60 * 24));
     daysMain = days;
   };
 
@@ -36,7 +34,7 @@ function EachRec(props) {
             <b>Name:</b> {props.name}
           </h5>
           <p className="card-text">
-            <b>Birthday:</b> {props.date}
+            <b>Birthday:</b> {props.date.split("-").reverse().join("/")}
           </p>
           <div className="btn-group">
             <a
@@ -46,7 +44,7 @@ function EachRec(props) {
               href="#"
               className="btn btn-outline-danger"
             >
-              Delete
+              Delete &nbsp; <img src={XCircleSVG} alt="" />
             </a>
             <a
               onClick={() => {
@@ -59,10 +57,7 @@ function EachRec(props) {
               href="#"
               className="btn btn-outline-primary"
             >
-              Edit
-            </a>
-            <a href="#" className="btn btn-outline-success">
-              Remaind
+              Edit &nbsp; <img src={PencilSquareSVG} alt="" />
             </a>
           </div>
         </div>
